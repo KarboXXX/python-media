@@ -4,20 +4,14 @@
 from logging import error
 import os
 import sys
-import instalooter
 import pytube
 from termcolor import colored
 from tkinter import Tk, filedialog
-from datetime import datetime
-from instalooter.looters import PostLooter
 
 # before-hand error handling
 if sys.version_info[0] < 3:
     exit("you need to run this script using python 3")
     
-# print(colored("running script on {0}".format(platform.system()), "blue"))
-
-
 if (len(sys.argv) == 1):
     print('just type an instagram or a youtube url and it will detect and download it for you.')
     exit(colored("[?]   usage: python3 {0} URL [path]".format(sys.argv[0]), "yellow"))
@@ -31,7 +25,6 @@ def get_download_path():
                 location = winreg.QueryValueEx(key, downloads_guid)[0]
             return location
         else:
-            #print(os.path.expanduser('~') + 'Downloads')
             if (os.path.exists(os.path.expanduser("~") + '/Downloads')):
                 return os.path.expanduser("~") + '/Downloads'
             else:
@@ -59,7 +52,7 @@ if (sys.argv[1].__contains__('youtube')):
         video.get_highest_resolution().download(open_file, "download.mp4")
 
     else:
-        video.first().download(sys.argv[2], "download.mp4")
+        video.get_highest_resolution().download(sys.argv[2], "download.mp4")
         
 if (sys.argv[1].__contains__('instagram')):
     print('not working :(')
